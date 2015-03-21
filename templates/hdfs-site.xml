@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>dfs.nameservices</name>
+    <value>{{ hdfs_dockerized_nameservice_id }}</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.namenodes.{{ hdfs_dockerized_nameservice_id }}</name>
+    <value>nn1,nn2</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.rpc-address.{{ hdfs_dockerized_nameservice_id }}.nn1</name>
+    <value>{{ dockerized_namenode_1 }}:{{ namenode_rpc_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.rpc-address.{{ hdfs_dockerized_nameservice_id }}.nn2</name>
+    <value>{{ dockerized_namenode_2 }}:{{ namenode_rpc_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address.{{ hdfs_dockerized_nameservice_id }}.nn1</name>
+    <value>{{ dockerized_namenode_1 }}:{{ namenode_http_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address.{{ hdfs_dockerized_nameservice_id }}.nn2</name>
+    <value>{{ dockerized_namenode_2 }}:{{ namenode_http_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:{{ datanode_http_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:{{ datanode_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.ipc.address</name>
+    <value>0.0.0.0:{{ datanode_ipc_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://{{ dockerized_journalnode_1 }}:{{ journalnode_port }};{{ dockerized_journalnode_2 }}:{{ journalnode_port }};{{ dockerized_journalnode_3 }}:{{ journalnode_port }}/{{ hdfs_dockerized_nameservice_id }}</value>
+  </property>
+
+  <property>
+    <name>dfs.client.failover.proxy.provider.{{ hdfs_dockerized_nameservice_id }}</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>shell(/bin/true)</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/var/hadoop/jnedits</value>
+  </property>
+
+{% if (dfs_ha_namenode_id|default('')) != ''  %}
+  <property>
+    <name>dfs.ha.namenode.id</name>
+    <value>{{ dfs_ha_namenode_id }}</value>
+  </property>
+{% endif %}
+
+</configuration>

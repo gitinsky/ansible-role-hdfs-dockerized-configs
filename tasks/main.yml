@@ -1,0 +1,17 @@
+- name: create ext volume for data
+  file: state=directory path={{ ext_hadoop_volume }}
+
+- name: create ext volume for configs
+  file: state=directory path={{ ext_hadoop_conf_volume }}
+
+- name: put core-site.xml config
+  template: src=core-site.xml dest={{ ext_hadoop_conf_volume }}/core-site.xml
+
+- name: put hdfs-site.xml config
+  template: src=hdfs-site.xml dest={{ ext_hadoop_conf_volume }}/hdfs-site.xml
+
+- name: put hadoop-env.sh config
+  template: src=hadoop-env.sh dest={{ ext_hadoop_conf_volume }}/hadoop-env.sh
+
+- name: put exclusion list
+  template: src=exclusion-list dest={{ ext_hadoop_volume }}/exclusion-list
