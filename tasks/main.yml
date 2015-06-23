@@ -16,6 +16,6 @@
 - name: put exclusion list
   template: src=exclusion-list dest={{ ext_hadoop_volume }}/exclusion-list
 
-- name: put /etc/hosts
-  template: src=hosts dest={{ ext_hadoop_conf_volume }}/hosts
-  when: docker_net_false|default(False) == True
+#- name: put /etc/hosts
+#  template: src=hosts dest={{ ext_hadoop_conf_volume }}/hosts
+#  when: docker_net_false|default(False) == True
