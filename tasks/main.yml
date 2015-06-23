@@ -19,3 +19,7 @@
 #- name: put /etc/hosts
 #  template: src=hosts dest={{ ext_hadoop_conf_volume }}/hosts
 #  when: docker_net_false|default(False) == True
+
+- name: put /etc/resolv.conf
+  template: src=resolv.conf dest={{ ext_hadoop_conf_volume }}/resolv.conf
+  when: docker_net_false|default(False) == True
